@@ -41,6 +41,17 @@ class Product
      */
     private $price;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Cart", inversedBy="products")
+     */
+    private $cart;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stock", inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $stock;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +113,30 @@ class Product
     public function setPrice(string $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getCart(): ?Cart
+    {
+        return $this->cart;
+    }
+
+    public function setCart(?Cart $cart): self
+    {
+        $this->cart = $cart;
+
+        return $this;
+    }
+
+    public function getStock(): ?Stock
+    {
+        return $this->stock;
+    }
+
+    public function setStock(?Stock $stock): self
+    {
+        $this->stock = $stock;
 
         return $this;
     }

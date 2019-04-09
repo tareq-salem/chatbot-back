@@ -26,6 +26,12 @@ class Store
      */
     private $address;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stock", inversedBy="stores")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $stock;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +57,18 @@ class Store
     public function setAddress(?string $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getStock(): ?Stock
+    {
+        return $this->stock;
+    }
+
+    public function setStock(?Stock $stock): self
+    {
+        $this->stock = $stock;
 
         return $this;
     }
