@@ -573,3 +573,7 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.gitignore.io/api/eclipse,phpstorm,intellij,visualstudio,visualstudiocode
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###
