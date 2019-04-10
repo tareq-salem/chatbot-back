@@ -48,9 +48,9 @@ class User
      */
     private $bookings;
 
-    /**
-     * @ORM\Column(type="array")
-     */
+   /**
+    * @ORM\Column(type="json")
+    */
     private $role = [];
 
     public function __construct()
