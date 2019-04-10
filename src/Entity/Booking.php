@@ -88,6 +88,7 @@ class Booking
             $this->carts[] = $cart;
             $cart->setBooking($this);
         }
+    }
 
     public function removeCart(Cart $cart): self
     {
