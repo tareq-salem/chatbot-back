@@ -87,6 +87,39 @@
     "evenement/evenement": {
         "version": "v3.0.1"
     },
+    "firebase/php-jwt": {
+        "version": "v5.0.0"
+    },
+    "google/auth": {
+        "version": "v1.4.0"
+    },
+    "google/cloud-dialogflow": {
+        "version": "v0.7.0"
+    },
+    "google/common-protos": {
+        "version": "1.0"
+    },
+    "google/gax": {
+        "version": "1.0.1"
+    },
+    "google/grpc-gcp": {
+        "version": "0.1.4"
+    },
+    "google/protobuf": {
+        "version": "v3.7.1"
+    },
+    "grpc/grpc": {
+        "version": "1.19.0"
+    },
+    "guzzlehttp/guzzle": {
+        "version": "6.3.3"
+    },
+    "guzzlehttp/promises": {
+        "version": "v1.3.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.5.2"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -111,11 +144,17 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/log": {
         "version": "1.1.0"
     },
     "psr/simple-cache": {
         "version": "1.0.1"
+    },
+    "ralouphie/getallheaders": {
+        "version": "2.0.5"
     },
     "react/cache": {
         "version": "v0.5.0"
