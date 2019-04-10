@@ -2,11 +2,8 @@
 
 namespace App\Entity;
 
-<<<<<<< HEAD
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-=======
->>>>>>> création entitées
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,8 +27,6 @@ class Store
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $address;
-
-<<<<<<< HEAD
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Stock", mappedBy="store")
      */
@@ -44,8 +39,6 @@ class Store
         $this->stocks = new ArrayCollection();
     }
 
-=======
->>>>>>> création entitées
     public function getId(): ?int
     {
         return $this->id;
@@ -74,8 +67,6 @@ class Store
 
         return $this;
     }
-<<<<<<< HEAD
-
     /**
      * @return Collection|Stock[]
      */
@@ -107,6 +98,4 @@ class Store
         return $this;
     }
 
-=======
->>>>>>> création entitées
 }
