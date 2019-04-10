@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,10 +29,16 @@ class Store
     private $address;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stock", inversedBy="stores")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity="App\Entity\Stock", mappedBy="store")
      */
-    private $stock;
+    private $stocks;
+
+
+
+    public function __construct()
+    {
+        $this->stocks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -61,15 +69,35 @@ class Store
         return $this;
     }
 
-    public function getStock(): ?Stock
+    /**
+     * @return Collection|Stock[]
+     */
+    public function getStocks(): Collection
     {
-        return $this->stock;
+        return $this->stocks;
     }
 
-    public function setStock(?Stock $stock): self
+    public function addStock(Stock $stock): self
     {
-        $this->stock = $stock;
+        if (!$this->stocks->contains($stock)) {
+            $this->stocks[] = $stock;
+            $stock->setStore($this);
+        }
 
         return $this;
     }
+
+    public function removeStock(Stock $stock): self
+    {
+        if ($this->stocks->contains($stock)) {
+            $this->stocks->removeElement($stock);
+            // set the owning side to null (unless already changed)
+            if ($stock->getStore() === $this) {
+                $stock->setStore(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

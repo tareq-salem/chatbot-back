@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,20 +22,16 @@ class Stock
     private $nb_product;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="stock")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="stocks")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $products;
+    private $product;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Store", mappedBy="stock")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Store", inversedBy="stocks")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $stores;
-
-    public function __construct()
-    {
-        $this->products = new ArrayCollection();
-        $this->stores = new ArrayCollection();
-    }
+    private $store;
 
     public function getId(): ?int
     {
@@ -56,64 +50,26 @@ class Stock
         return $this;
     }
 
-    /**
-     * @return Collection|Product[]
-     */
-    public function getProducts(): Collection
+    public function getProduct(): ?Product
     {
-        return $this->products;
+        return $this->product;
     }
 
-    public function addProduct(Product $product): self
+    public function setProduct(?Product $product): self
     {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-            $product->setStock($this);
-        }
+        $this->product = $product;
 
         return $this;
     }
 
-    public function removeProduct(Product $product): self
+    public function getStore(): ?Store
     {
-        if ($this->products->contains($product)) {
-            $this->products->removeElement($product);
-            // set the owning side to null (unless already changed)
-            if ($product->getStock() === $this) {
-                $product->setStock(null);
-            }
-        }
-
-        return $this;
+        return $this->store;
     }
 
-    /**
-     * @return Collection|Store[]
-     */
-    public function getStores(): Collection
+    public function setStore(?Store $store): self
     {
-        return $this->stores;
-    }
-
-    public function addStore(Store $store): self
-    {
-        if (!$this->stores->contains($store)) {
-            $this->stores[] = $store;
-            $store->setStock($this);
-        }
-
-        return $this;
-    }
-
-    public function removeStore(Store $store): self
-    {
-        if ($this->stores->contains($store)) {
-            $this->stores->removeElement($store);
-            // set the owning side to null (unless already changed)
-            if ($store->getStock() === $this) {
-                $store->setStock(null);
-            }
-        }
+        $this->store = $store;
 
         return $this;
     }

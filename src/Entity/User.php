@@ -44,15 +44,14 @@ class User
     private $address;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="relation")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $role;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="user", orphanRemoval=true)
      */
     private $bookings;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $role = [];
 
     public function __construct()
     {
@@ -124,18 +123,6 @@ class User
         return $this;
     }
 
-    public function getRole(): ?Role
-    {
-        return $this->role;
-    }
-
-    public function setRole(?Role $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Booking[]
      */
@@ -163,6 +150,18 @@ class User
                 $booking->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRole(): ?array
+    {
+        return $this->role;
+    }
+
+    public function setRole(array $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }
