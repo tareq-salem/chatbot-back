@@ -55,16 +55,6 @@ class Booking
     public function setIsValidate(bool $isValidate): self
     {
         $this->isValidate = $isValidate;
-        
-    public function getUserId(): ?int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(?int $user_id): self
-    {
-        $this->user_id = $user_id;
-        return $this;
     }
     public function getIsTerminated(): ?bool
     {
@@ -74,18 +64,7 @@ class Booking
     public function setIsTerminated(bool $isTerminated): self
     {
         $this->isTerminated = $isTerminated;
-    public function getCartId(): ?int
-    {
-        return $this->cart_id;
     }
-
-    public function setCartId(?int $cart_id): self
-    {
-        $this->cart_id = $cart_id;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
