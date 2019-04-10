@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+<<<<<<< HEAD
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+=======
+>>>>>>> création entitées
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,6 +22,7 @@ class Booking
     private $id;
 
     /**
+<<<<<<< HEAD
      * @ORM\Column(type="boolean")
      */
     private $isValidate;
@@ -43,12 +47,38 @@ class Booking
     {
         $this->carts = new ArrayCollection();
     }
+=======
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $user_id;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $cart_id;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $store_id;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isValidate;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isTerminated;
+>>>>>>> création entitées
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
+<<<<<<< HEAD
     public function getIsValidate(): ?bool
     {
         return $this->isValidate;
@@ -57,10 +87,21 @@ class Booking
     public function setIsValidate(bool $isValidate): self
     {
         $this->isValidate = $isValidate;
+=======
+    public function getUserId(): ?int
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?int $user_id): self
+    {
+        $this->user_id = $user_id;
+>>>>>>> création entitées
 
         return $this;
     }
 
+<<<<<<< HEAD
     public function getIsTerminated(): ?bool
     {
         return $this->isTerminated;
@@ -69,10 +110,21 @@ class Booking
     public function setIsTerminated(bool $isTerminated): self
     {
         $this->isTerminated = $isTerminated;
+=======
+    public function getCartId(): ?int
+    {
+        return $this->cart_id;
+    }
+
+    public function setCartId(?int $cart_id): self
+    {
+        $this->cart_id = $cart_id;
+>>>>>>> création entitées
 
         return $this;
     }
 
+<<<<<<< HEAD
     public function getUser(): ?User
     {
         return $this->user;
@@ -81,10 +133,21 @@ class Booking
     public function setUser(?User $user): self
     {
         $this->user = $user;
+=======
+    public function getStoreId(): ?int
+    {
+        return $this->store_id;
+    }
+
+    public function setStoreId(?int $store_id): self
+    {
+        $this->store_id = $store_id;
+>>>>>>> création entitées
 
         return $this;
     }
 
+<<<<<<< HEAD
     /**
      * @return Collection|Cart[]
      */
@@ -99,10 +162,21 @@ class Booking
             $this->carts[] = $cart;
             $cart->setBooking($this);
         }
+=======
+    public function getIsValidate(): ?bool
+    {
+        return $this->isValidate;
+    }
+
+    public function setIsValidate(bool $isValidate): self
+    {
+        $this->isValidate = $isValidate;
+>>>>>>> création entitées
 
         return $this;
     }
 
+<<<<<<< HEAD
     public function removeCart(Cart $cart): self
     {
         if ($this->carts->contains($cart)) {
@@ -116,4 +190,17 @@ class Booking
         return $this;
     }
 
+=======
+    public function getIsTerminated(): ?bool
+    {
+        return $this->isTerminated;
+    }
+
+    public function setIsTerminated(bool $isTerminated): self
+    {
+        $this->isTerminated = $isTerminated;
+
+        return $this;
+    }
+>>>>>>> création entitées
 }
