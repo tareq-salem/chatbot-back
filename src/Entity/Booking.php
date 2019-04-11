@@ -55,6 +55,7 @@ class Booking
     public function setIsValidate(bool $isValidate): self
     {
         $this->isValidate = $isValidate;
+        return $this;
     }
     public function getIsTerminated(): ?bool
     {
@@ -64,6 +65,7 @@ class Booking
     public function setIsTerminated(bool $isTerminated): self
     {
         $this->isTerminated = $isTerminated;
+        return $this;
     }
     public function getUser(): ?User
     {
@@ -73,7 +75,8 @@ class Booking
     public function setUser(?User $user): self
     {
        $this->user = $user;
-    }        
+       return $this;
+    }
     /**
      * @return Collection|Cart[]
      */

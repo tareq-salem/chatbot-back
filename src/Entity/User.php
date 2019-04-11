@@ -4,13 +4,13 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User 
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -52,7 +52,7 @@ class User
    /**
     * @ORM\Column(type="json")
     */
-    private $role = [];
+    private $roles = [];
 
     public function __construct()
     {
@@ -74,6 +74,16 @@ class User
         $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
     }
 
     public function getPassword(): ?string
@@ -155,15 +165,55 @@ class User
         return $this;
     }
 
-    public function getRole(): ?array
+    /**
+     * @return array
+     */
+    public function getRoles(): array
     {
-        return $this->role;
+        $roles = $this->roles;
+        $roles[] = "ROLE_USER";
+        return array_unique($roles);
     }
 
-    public function setRole(array $role): self
+    public function setRoles(array $roles): self
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
+    }
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->email,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized, array('allowed_classes' => false));
     }
 }

@@ -4,7 +4,6 @@ easy_admin:
         - App\Entity\User
         - App\Entity\Stock
         - App\Entity\Store
-        - App\Entity\Admin
     site_name: '<img style="width: 200px; height: auto;" src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_1511988551/chatbox.png">'
     design:
         brand_color: 'orange'
