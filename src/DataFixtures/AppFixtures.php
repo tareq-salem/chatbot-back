@@ -1,6 +1,7 @@
 <?php
 
 namespace App\DataFixtures;
+
 use App\Entity\Product;
 use App\Entity\User;
 use App\Entity\Booking;
@@ -9,6 +10,7 @@ use App\Entity\Stock;
 use App\Entity\Store;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+
 
 class AppFixtures extends Fixture
 {
