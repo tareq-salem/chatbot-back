@@ -26,29 +26,6 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="cart_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $cart = new Cart();
-        $form = $this->createForm(CartType::class, $cart);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($cart);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('cart_index');
-        }
-
-        return $this->render('cart/new.html.twig', [
-            'cart' => $cart,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="cart_show", methods={"GET"})
      */
     public function show(Cart $cart): Response
@@ -58,27 +35,27 @@ class CartController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="cart_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Cart $cart): Response
-    {
-        $form = $this->createForm(CartType::class, $cart);
-        $form->handleRequest($request);
+    // /**
+    //  * @Route("/{id}/edit", name="cart_edit", methods={"GET","POST"})
+    //  */
+    // public function edit(Request $request, Cart $cart): Response
+    // {
+    //     $form = $this->createForm(CartType::class, $cart);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('cart_index', [
-                'id' => $cart->getId(),
-            ]);
-        }
+    //         return $this->redirectToRoute('cart_index', [
+    //             'id' => $cart->getId(),
+    //         ]);
+    //     }
 
-        return $this->render('cart/edit.html.twig', [
-            'cart' => $cart,
-            'form' => $form->createView(),
-        ]);
-    }
+    //     return $this->render('cart/edit.html.twig', [
+    //         'cart' => $cart,
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 
     /**
      * @Route("/{id}", name="cart_delete", methods={"DELETE"})

@@ -26,29 +26,6 @@ class StoreController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="store_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $store = new Store();
-        $form = $this->createForm(StoreType::class, $store);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($store);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('store_index');
-        }
-
-        return $this->render('store/new.html.twig', [
-            'store' => $store,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="store_show", methods={"GET"})
      */
     public function show(Store $store): Response
@@ -58,39 +35,4 @@ class StoreController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="store_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Store $store): Response
-    {
-        $form = $this->createForm(StoreType::class, $store);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('store_index', [
-                'id' => $store->getId(),
-            ]);
-        }
-
-        return $this->render('store/edit.html.twig', [
-            'store' => $store,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="store_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Store $store): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$store->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($store);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('store_index');
-    }
 }
