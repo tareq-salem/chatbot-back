@@ -25,7 +25,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
 
-        {
+        
             $admin = new User();
             $admin->setEmail('admin@admin.fr');
             $admin->setPassword($this->encoder->encodePassword($admin, 'root'));
@@ -36,16 +36,13 @@ class AppFixtures extends Fixture
 
             $manager->persist($admin);
             $manager->flush();
-        }
+        
         $faker = Factory::create('fr_FR');
 
         //Fake table product
         $randomProduct = array();
         $randomCategorie = ['BD','Jouet','aucun'];
-
-
         for ($i = 0; $i < 20; $i++)
-
         {
             $product = new Product();
             $product->setName($faker->name);
@@ -60,9 +57,8 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         //Fake table  user
-
         $randomUser = array();
-        $randomRoles =['ROLE_USER','ROLE_ADMIN'];
+        //$randomRoles =['ROLE_USER','ROLE_ADMIN'];
         for($i = 0; $i < 5; $i++ )
         {
             $User = new User();
@@ -72,7 +68,7 @@ class AppFixtures extends Fixture
             $User->setFirstname($faker->firstName);
             $User->setLastname($faker->lastName);
             $User->setAddress($faker->address);
-            $User->setRoles([$faker->randomElement($randomRoles)]);
+            //$User->setRoles([$faker->randomElement($randomRoles)]);
 
             $randomUser [] = $User; 
             $manager->persist($User);
@@ -95,7 +91,6 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         //Fake table Cart
-
         for($i = 0; $i < 2; $i++ ) 
         {
             $cart = new Cart();
@@ -105,7 +100,9 @@ class AppFixtures extends Fixture
 
             $manager->persist($cart);
         }
+
         $manager->flush();
+
         //Fake table Store
         $randomStore = array();
         for($i = 0; $i < 3; $i++ ) 
@@ -113,11 +110,14 @@ class AppFixtures extends Fixture
             $store = new Store();
             $store->setName($faker->name);
             $store->setAddress($faker->address);
-
+            $randomStore [] = $store;
+            $manager->persist($store);
+            
+        }
+        $manager->flush();
 
 
         //Fake table Stock
-
         for($i = 0; $i < 5; $i++ )
         {
             $stock = new Stock();
@@ -132,4 +132,5 @@ class AppFixtures extends Fixture
 
 
     }
+  
 }
