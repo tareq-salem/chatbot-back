@@ -21,6 +21,7 @@ class AppFixtures extends Fixture
      {
          $this->encoder = $encoder;
      }
+
     public function load(ObjectManager $manager)
     {
 
@@ -41,7 +42,10 @@ class AppFixtures extends Fixture
         //Fake table product
         $randomProduct = array();
         $randomCategorie = ['BD','Jouet','aucun'];
+
+
         for ($i = 0; $i < 20; $i++)
+
         {
             $product = new Product();
             $product->setName($faker->name);
@@ -110,10 +114,7 @@ class AppFixtures extends Fixture
             $store->setName($faker->name);
             $store->setAddress($faker->address);
 
-            $randomStore [] = $store; 
-            $manager->persist($store);
-        }
-        $manager->flush();
+
 
         //Fake table Stock
 

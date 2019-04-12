@@ -7,7 +7,11 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Error;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -28,24 +32,34 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request,  UserPasswordEncoderInterface $encoder): Response
     {
+       
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+        $em       = $this->getDoctrine()->getManager();
+        $encoded  = $encoder->encodePassword($user, $data['password']);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('user_index');
+        //$form->handleRequest($request);
+        try {
+            $form->submit($data);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => 'ça ne marche pas']);
         }
 
-        return $this->render('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
+
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            $user = $form->getData();
+            $user->setPassword($encoded);
+            $em->persist($user);
+            $em->flush();
+        }
+
+        $data = $this->get('serializer')->serialize($user, 'json');
+        return new JsonResponse($data, 200, [], true);
     }
 
     /**
