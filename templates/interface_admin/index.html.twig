@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello InterfaceAdminController!{% endblock %}
+
+{% block body %}
+
+<style>
+.container {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+.title{
+    background: red;
+    text-align: center;
+    color: white;
+    height: 5vh;
+}
+.messages{
+    border: 1px solid;
+    height: 88vh;
+}
+.input{
+    border: 1px solid;
+    height: 5vh;
+}
+</style>
+
+<div class="container">
+    <div class="title">
+    <h1> Mon super chatbot </h1>
+    </div>
+
+    <div class="messages">
+    <div class="feed">
+    </div>
+
+    <div class="chatbot-context">
+    </div>
+    </div>
+
+    <div class="input">
+        <input style="width: 92%; height: 100%"/>        
+        <button class="btn btn-success">Envoyer</button>
+    </div>
+</div>
+{# <a class="btn btn-success" href="{{ path("easyadmin")}}">Retour</a> #}
+{% endblock %}
