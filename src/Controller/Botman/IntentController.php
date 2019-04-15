@@ -2,24 +2,35 @@
 namespace App\Controller\Botman;
 
 use App\Controller\ProductController;
+use App\Repository\ProductRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class IntentController
+class IntentController extends AbstractController
 {
+    private $productController;
+    private $productRepository;
 
-    public function intentRouter($content) {
+    public function  __construct(ProductController $productController, ProductRepository $productRepository)
+    {
+        $this->productController = $productController;
+        $this->productRepository = $productRepository;
+    }
+
+    public function intentRouter(ProductController $productController, ProductRepository $productRepository, $content) {
         $data = json_decode($content, true);
         $queryResult = $data["response"]["queryResult"];
         $intentName = $queryResult["intent"]["displayName"];
 
-        $dbItems = array();
+        $response = null;
 
         switch($intentName) {
-            case "intent.products":
-                $products = new ProductController();
-//                $dbItems = $products->
+            case "intent.test.produit":
+                $data["response"]["data"] = $productController->getAllproducts($productRepository);
                 break;
         }
 
-        return $dbItems;
+        $response = json_encode($data);
+
+        return $response;
     }
 }

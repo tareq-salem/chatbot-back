@@ -10,17 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/product")
- */
 class ProductController extends AbstractController
 {
-    /**
-     * @Route("/", name="product_index", methods={"GET"})
-     */
-    public function index(ProductRepository $productRepository): Response
+    public function getAllProducts(ProductRepository $productRepository)
     {
         $products = $productRepository->findAll();
         $productList = [];
@@ -28,6 +21,7 @@ class ProductController extends AbstractController
         {
             $list = 
             [
+                'id'=> $list->getId(),
                 'name' => $list->getName(),
                 'image' =>$list->getImage(),
                 'description' => $list->getDescription()
@@ -36,16 +30,10 @@ class ProductController extends AbstractController
             array_push($productList, $list);
         }
         
-
-        $data = $this->get('serializer')->serialize($productList, 'json');
-        
-        return new JsonResponse($data, 200, [], true);
+        return $productList;
     }
 
-    /**
-     * @Route("/show", name="product_show", methods={"GET"})
-     */
-    public function show(Request $request, ProductRepository $productRepository): Response
+    public function getProduct(Request $request, ProductRepository $productRepository): Response
     {
         $data = json_decode($request->getContent(), true);
 
