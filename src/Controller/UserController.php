@@ -7,6 +7,7 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Serializer;
 use Error;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,30 +36,32 @@ class UserController extends AbstractController
     public function new(Request $request,  UserPasswordEncoderInterface $encoder): Response
     {
        
+       
+        $em = $this->getDoctrine()->getManager();
+        $data = json_decode($request->getContent(), true);
+
+        $email = $data['email'];
+        $password =  $data['password'];
+        $firstname =  $data['firstname'];;
+        $lastname =  $data['lastname'];
+        $address =  $data['address'];
+        
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $content = $request->getContent();
-        $data = json_decode($content, true);
-        $em       = $this->getDoctrine()->getManager();
-        $encoded  = $encoder->encodePassword($user, $data['password']);
-
-        //$form->handleRequest($request);
-        try {
-            $form->submit($data);
-        } catch (\Exception $e) {
-            return new JsonResponse(['error' => 'ça ne marche pas']);
-        }
-
-
-        if ($form->isSubmitted() && $form->isValid()) 
-        {
-            $user = $form->getData();
+        
+        
+            $user->setEmail($email);
+            $encoded  = $encoder->encodePassword($user, $password);
             $user->setPassword($encoded);
+            $user->setFirstname($firstname);
+            $user->setLastname($lastname);
+            $user->setAddress($address);
+           
             $em->persist($user);
             $em->flush();
-        }
 
+      
         $data = $this->get('serializer')->serialize($user, 'json');
+        
         return new JsonResponse($data, 200, [], true);
     }
 
