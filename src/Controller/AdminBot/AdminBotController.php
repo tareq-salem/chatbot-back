@@ -15,6 +15,6 @@ class AdminBotController extends AbstractController
      */
     public function adminBot()
     {
-        
+        return $this->render('adminbot/bot.html.twig');
     }
 }

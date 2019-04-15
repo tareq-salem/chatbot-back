@@ -186,5 +186,4 @@ class Product
 
         return $this;
     }
-
 }
