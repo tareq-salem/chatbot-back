@@ -216,4 +216,13 @@ class User implements UserInterface, \Serializable
             // $this->salt
         ) = unserialize($serialized, array('allowed_classes' => false));
     }
+
+         /**
+    * 
+    * @return string
+    */
+
+    public function __toString() {
+        return (string) $this->id;
+    }
 }

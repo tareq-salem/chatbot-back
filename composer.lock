@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6864d9e834cf59bb8ce4bef064730093",
+    "content-hash": "12663605e04d74fad36ebe488c8b060e",
     "packages": [
         {
             "name": "botman/botman",
@@ -140,6 +140,59 @@
                 "web"
             ],
             "time": "2018-03-27T10:19:41+00:00"
+        },
+        {
+            "name": "cboden/ratchet",
+            "version": "v0.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ratchetphp/Ratchet.git",
+                "reference": "0d31f3a8ad4795fd48397712709e55cd07f51360"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ratchetphp/Ratchet/zipball/0d31f3a8ad4795fd48397712709e55cd07f51360",
+                "reference": "0d31f3a8ad4795fd48397712709e55cd07f51360",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/psr7": "^1.0",
+                "php": ">=5.4.2",
+                "ratchet/rfc6455": "^0.2",
+                "react/socket": "^1.0 || ^0.8 || ^0.7 || ^0.6 || ^0.5",
+                "symfony/http-foundation": "^2.6|^3.0|^4.0",
+                "symfony/routing": "^2.6|^3.0|^4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ratchet\\": "src/Ratchet"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP WebSocket library",
+            "homepage": "http://socketo.me",
+            "keywords": [
+                "Ratchet",
+                "WebSockets",
+                "server",
+                "sockets",
+                "websocket"
+            ],
+            "time": "2017-12-12T00:49:31+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2664,6 +2717,55 @@
             ],
             "description": "A polyfill for getallheaders.",
             "time": "2016-02-11T07:05:27+00:00"
+        },
+        {
+            "name": "ratchet/rfc6455",
+            "version": "v0.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ratchetphp/RFC6455.git",
+                "reference": "c62f7cd95ffbb6e94fd657be694fc7372ecd6e62"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ratchetphp/RFC6455/zipball/c62f7cd95ffbb6e94fd657be694fc7372ecd6e62",
+                "reference": "c62f7cd95ffbb6e94fd657be694fc7372ecd6e62",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/psr7": "^1.0",
+                "php": ">=5.4.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*",
+                "react/http": "^0.4.1",
+                "react/socket-client": "^0.4.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ratchet\\RFC6455\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "RFC6455 WebSocket protocol handler",
+            "homepage": "http://socketo.me",
+            "keywords": [
+                "WebSockets",
+                "rfc6455",
+                "websocket"
+            ],
+            "time": "2019-03-10T17:10:42+00:00"
         },
         {
             "name": "react/cache",
