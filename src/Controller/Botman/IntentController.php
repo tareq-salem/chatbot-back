@@ -16,7 +16,7 @@ class IntentController extends AbstractController
         $this->productRepository = $productRepository;
     }
 
-    public function intentRouter(ProductController $productController, ProductRepository $productRepository, $content) {
+    public function intentRouter(ProductController $productController, ProductRepository $productRepository, $request, $content) {
         $data = json_decode($content, true);
         $queryResult = $data["response"]["queryResult"];
         $intentName = $queryResult["intent"]["displayName"];
