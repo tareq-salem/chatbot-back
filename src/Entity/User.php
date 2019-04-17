@@ -45,6 +45,12 @@ class User implements UserInterface, \Serializable
     private $address;
 
     /**
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $apiToken;
+
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="user", orphanRemoval=true)
      */
     private $bookings;
@@ -193,6 +199,22 @@ class User implements UserInterface, \Serializable
     {
     }
 
+    /**
+     * @return mixed
+     */
+    public function getApiToken()
+    {
+        return $this->apiToken;
+    }
+
+    /**
+     * @param mixed $apiToken
+     */
+    public function setApiToken($apiToken)
+    {
+        $this->apiToken = $apiToken;
+    }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {
@@ -217,6 +239,8 @@ class User implements UserInterface, \Serializable
         ) = unserialize($serialized, array('allowed_classes' => false));
     }
 
+
+
          /**
     * 
     * @return string
@@ -225,4 +249,5 @@ class User implements UserInterface, \Serializable
     public function __toString() {
         return (string) $this->id;
     }
+
 }

@@ -4,11 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Booking;
 use App\Form\BookingType;
+use App\Entity\User;
 use App\Repository\BookingRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/booking")
@@ -18,11 +23,21 @@ class BookingController extends AbstractController
     /**
      * @Route("/", name="booking_index", methods={"GET"})
      */
-    public function index(BookingRepository $bookingRepository): Response
+    public function index(Security $security,BookingRepository $bookingRepository, UserRepository $userRepository): JsonResponse
     {
-        return $this->render('booking/index.html.twig', [
-            'bookings' => $bookingRepository->findAll(),
-        ]);
+        $bookingInfo = [];
+        $user = $userRepository->findOneByUserName($security->getUser()->getUsername());
+        $bookings =$user->getBookings();
+        foreach ($bookings as $list){
+            $list = [ 'name' => $list->getUser()->getUsername(),
+                      'status' => $list->getIsValidate(),
+                      'isTerminated' => $list->getIsTerminated()];
+            array_push($bookingInfo , $list);
+        }
+
+
+        $data = $this->get('serializer')->serialize($bookingInfo, 'json');
+        return new JsonResponse($data, 200, [], true);
     }
 
     /**

@@ -26,16 +26,19 @@ class AppFixtures extends Fixture
     {
 
         
-        $admin = new User();
-        $admin->setEmail('admin@admin.fr');
-        $admin->setPassword($this->encoder->encodePassword($admin, 'root'));
-        $admin->setFirstname("Faresse");
-        $admin->setLastname("TAHLAITI");
-        $admin->setAddress("5 rue du gay paul 6900");
-        $admin->setRoles(["ROLE_ADMIN"]);
 
-        $manager->persist($admin);
-        $manager->flush();
+            $admin = new User();
+            $admin->setEmail('admin@admin.fr');
+            $admin->setPassword($this->encoder->encodePassword($admin, 'root'));
+            $admin->setFirstname("Faresse");
+            $admin->setLastname("TAHLAITI");
+            $admin->setAddress("5 rue du gay paul 6900");
+            $admin->setRoles(["ROLE_ADMIN"]);
+            $admin->setApiToken('gggggggggg');
+
+            $manager->persist($admin);
+            $manager->flush();
+
         
         $faker = Factory::create('fr_FR');
 
@@ -68,6 +71,8 @@ class AppFixtures extends Fixture
             $User->setFirstname($faker->firstName);
             $User->setLastname($faker->lastName);
             $User->setAddress($faker->address);
+            $User->setApiToken($faker->text(10));
+
             $User->setRoles([$faker->randomElement($randomRoles)]);
 
             $randomUser [] = $User; 

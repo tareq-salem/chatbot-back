@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\Serializer;
 use Error;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,6 +46,7 @@ class UserController extends AbstractController
         $firstname =  $data['firstname'];;
         $lastname =  $data['lastname'];
         $address =  $data['address'];
+        $apiToken = $data['apiToken'];
         
         $user = new User();
         
@@ -55,7 +57,8 @@ class UserController extends AbstractController
             $user->setFirstname($firstname);
             $user->setLastname($lastname);
             $user->setAddress($address);
-           
+            $user->setRoles($user->getRoles());
+            $user->setApiToken($apiToken);
             $em->persist($user);
             $em->flush();
 
@@ -68,36 +71,58 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, Security $security, UserRepository $userRepository, $id, UserPasswordEncoderInterface $encoder): Response
     {
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        $user = $security->getUser();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        $em = $this->getDoctrine()->getManager();
+        $data = json_decode($request->getContent(), true);
 
-            return $this->redirectToRoute('user_index', [
-                'id' => $user->getId(),
-            ]);
-        }
+        $email = $data['email'];
+        $password =  $data['password'];
+        $firstname =  $data['firstname'];;
+        $lastname =  $data['lastname'];
+        $address =  $data['address'];
+        $apiToken = $data['apiToken'];
+        $userData = $userRepository->find($id);
 
-        return $this->render('user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
+         if ($userData === $user) {
+             $userData->setEmail($email);
+             $encoded  = $encoder->encodePassword($userData, $password);
+             $userData->setPassword($encoded);
+             $userData->setFirstname($firstname);
+             $userData->setLastname($lastname);
+             $userData->setAddress($address);
+             $userData->setRoles($user->getRoles());
+             $userData->setApiToken($apiToken);
+             $em->persist($userData);
+             $em->flush();
+
+         }
+
+        $data = $this->get('serializer')->serialize($userData , 'json');
+
+        return new JsonResponse($data, 200, [], true);
     }
 
     /**
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, User $user): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+    public function delete(Request $request, Security $security, User $user): Response
+    {   
+        $userConnecte = $security->getUser();
+          
+        if ($userConnecte  === $user) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
-        }
+        }else{
 
-        return $this->redirectToRoute('user_index');
+            return new Response("Vous n'avez pas l'autorisation.");
+
+        }
+        
+
+        return new Response("l'utilisateur " . $user->getUsername() .  " à été supprimé");
     }
 }
