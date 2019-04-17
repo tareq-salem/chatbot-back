@@ -41,7 +41,7 @@ class AppFixtures extends Fixture
 
         //Fake table product
         $randomProduct = array();
-        $randomCategorie = ['BD','Jouet','aucun'];
+        $randomCategorie = ['Livre','Jouet','Figurine','Vêtement'];
         for ($i = 0; $i < 20; $i++)
         {
             $product = new Product();

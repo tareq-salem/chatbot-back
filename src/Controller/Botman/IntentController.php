@@ -24,7 +24,7 @@ class IntentController extends AbstractController
         $response = null;
 
         switch($intentName) {
-            case "intent.test.produit":
+            case "04A_ListeProduits":
                 $data["response"]["data"] = $productController->getAllproducts($productRepository);
                 break;
         }
