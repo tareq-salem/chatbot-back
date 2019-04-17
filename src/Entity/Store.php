@@ -98,7 +98,7 @@ class Store
         return $this;
     }
 
-         /**
+    /**
     * 
     * @return string
     */
@@ -106,5 +106,4 @@ class Store
     public function __toString() {
         return (string) $this->id;
     }
-
 }

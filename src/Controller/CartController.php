@@ -7,6 +7,7 @@ use App\Form\CartType;
 use App\Repository\CartRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,23 +17,37 @@ use Symfony\Component\Routing\Annotation\Route;
 class CartController extends AbstractController
 {
     /**
-     * @Route("/", name="cart_index", methods={"GET"})
-     */
-    public function index(CartRepository $cartRepository): Response
-    {
-        return $this->render('cart/index.html.twig', [
-            'carts' => $cartRepository->findAll(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="cart_show", methods={"GET"})
      */
-    public function show(Cart $cart): Response
+    public function show(Request $request):Response
     {
-        return $this->render('cart/show.html.twig', [
-            'cart' => $cart,
+        
+        $em = $this->getDoctrine()->getManager();
+        $array = [];
+
+        $id = $request->get('id');
+
+        $cart = $em->getRepository(Cart::class)->find($id);
+        
+
+         if(!$cart) {
+             throw $this->createNotFoundException(
+                 'No cart found for id '.$id
+             );
+         }
+         $array = [
+            "cart_id" => $cart->getId(),
+            "product_id" => $cart->getProduct()->getId(),
+            "user_id" => $cart->getBooking()->getUser()->getId()
+         ];
+        // Serialize your object in Json
+        $serializer = $this->get('serializer');
+        $data = $serializer->serialize($array, 'json',[
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }
         ]);
+        return new JsonResponse($data ,200,[],true);
     }
 
     // /**

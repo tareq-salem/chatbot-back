@@ -1,0 +1,142 @@
+{
+	"info": {
+		"_postman_id": "108ab618-c501-4b18-bb73-b7ce50ef1f9f",
+		"name": "Chatbot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "hafid2@live.fr",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "firstname",
+							"value": "hafid",
+							"type": "text"
+						},
+						{
+							"key": "lastname",
+							"value": "hafid",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "4 rue blabal",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/user/new",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCat",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/cart/12",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"cart",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getStores",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/store",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"store"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOneStore",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/store/16",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"store",
+						"16"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

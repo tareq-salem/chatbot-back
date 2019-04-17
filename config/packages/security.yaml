@@ -2,9 +2,9 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         users:
-            entity:
-                class: App\Entity\User
-                property: email
+          entity:
+            class: App\Entity\User
+            property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -28,7 +28,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/profile, roles: ROLE_USER}
 
     encoders:
         App\Entity\User:

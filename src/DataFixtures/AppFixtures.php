@@ -17,25 +17,25 @@ class AppFixtures extends Fixture
 {
     private $encoder;
 
-     public function __construct(UserPasswordEncoderInterface $encoder)
-     {
-         $this->encoder = $encoder;
-     }
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
 
     public function load(ObjectManager $manager)
     {
 
         
-            $admin = new User();
-            $admin->setEmail('admin@admin.fr');
-            $admin->setPassword($this->encoder->encodePassword($admin, 'root'));
-            $admin->setFirstname("Faresse");
-            $admin->setLastname("TAHLAITI");
-            $admin->setAddress("5 rue du gay paul 6900");
-            $admin->setRoles(["ROLE_ADMIN"]);
+        $admin = new User();
+        $admin->setEmail('admin@admin.fr');
+        $admin->setPassword($this->encoder->encodePassword($admin, 'root'));
+        $admin->setFirstname("Faresse");
+        $admin->setLastname("TAHLAITI");
+        $admin->setAddress("5 rue du gay paul 6900");
+        $admin->setRoles(["ROLE_ADMIN"]);
 
-            $manager->persist($admin);
-            $manager->flush();
+        $manager->persist($admin);
+        $manager->flush();
         
         $faker = Factory::create('fr_FR');
 
@@ -58,7 +58,7 @@ class AppFixtures extends Fixture
 
         //Fake table  user
         $randomUser = array();
-        //$randomRoles =['ROLE_USER','ROLE_ADMIN'];
+        $randomRoles =['ROLE_USER'];
         for($i = 0; $i < 5; $i++ )
         {
             $User = new User();
@@ -68,7 +68,7 @@ class AppFixtures extends Fixture
             $User->setFirstname($faker->firstName);
             $User->setLastname($faker->lastName);
             $User->setAddress($faker->address);
-            //$User->setRoles([$faker->randomElement($randomRoles)]);
+            $User->setRoles([$faker->randomElement($randomRoles)]);
 
             $randomUser [] = $User; 
             $manager->persist($User);
@@ -100,7 +100,6 @@ class AppFixtures extends Fixture
 
             $manager->persist($cart);
         }
-
         $manager->flush();
 
         //Fake table Store
@@ -128,9 +127,6 @@ class AppFixtures extends Fixture
             $manager->persist($stock);
         }
         $manager->flush();
-
-
-
     }
   
 }
