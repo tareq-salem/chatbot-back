@@ -19,13 +19,26 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    public function findProductsByCategory($value) {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.categorie = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getResult()
-            ;
+    public function findProductsByCategory($categories) {
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT * FROM product p ";
+        if(sizeof($categories) == 1) {
+            $sql .= "WHERE p.categorie = '" . $categories[0] . "'";
+        }
+
+        if(sizeof($categories) > 1) {
+            $sql .= "WHERE p.categorie = '" . $categories[0] . "'";
+            for($i = 1; $i<sizeof($categories); $i++) {
+                $sql .= " OR p.categorie = '" . $categories[$i] . "'";
+            }
+
+        }
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
     }
 
     // /**

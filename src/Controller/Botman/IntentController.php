@@ -29,12 +29,7 @@ class IntentController extends AbstractController
                 break;
             case "04Abis_ListProduitsByCategorie":
                 $categories = $queryResult["parameters"]["Category"];
-                $products = null;
-                foreach($categories as $category)
-                {
-                    $object = ["categorie" => $category];
-                    $products += $productController->getProductByCategory($object, $productRepository);
-                }
+                $products =  $productController->getProductsByCategory($categories, $productRepository);
                 $data["response"]["data"] = $products;
                 break;
         }

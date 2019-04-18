@@ -34,10 +34,10 @@ class ProductController extends AbstractController
         return $productList;
     }
 
-    public function getProductByCategory($data, ProductRepository $productRepository)
+    public function getProductsByCategory($data, ProductRepository $productRepository)
     {
-        $product = $productRepository->findBy($data);
-        return $product;
+        $products = $productRepository->findProductsByCategory($data);
+        return $products;
     }
 
     /**
