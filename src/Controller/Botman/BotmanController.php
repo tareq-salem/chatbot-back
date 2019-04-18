@@ -44,8 +44,9 @@ class BotmanController extends AbstractController
         $content = $request->getContent();
         $data = json_decode($content, true);
         $message = $data["message"];
+        $sessionId = $data["session_id"];
         
-        $botmanReturn = $botmanService->detect_intent_texts("geekbot-efd25", [$message], "");
+        $botmanReturn = $botmanService->detect_intent_texts("geekbot-efd25", [$message], $sessionId);
         $response = $intentController->intentRouter($productController, $productRepository, $data, $botmanReturn);
 
         return new JsonResponse($response, 200, [], true);

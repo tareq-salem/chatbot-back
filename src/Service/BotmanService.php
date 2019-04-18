@@ -17,7 +17,8 @@ class BotmanService
     {
         // new session
         $sessionsClient = new SessionsClient();
-        $session = $sessionsClient->sessionName($projectId, $sessionId ?: uniqid());
+        $idSession = $sessionId ?: uniqid();
+        $session = $sessionsClient->sessionName($projectId, $idSession);
 
         $response = null;
 
@@ -52,7 +53,7 @@ class BotmanService
 
             // array_push($data, $queryText, $intent, $fulfilmentText);
         }
-        $sessionsClient->close();
-        return json_encode(["response" => $response]);
+        //$sessionsClient->close();
+        return json_encode(["response" => $response, "session_id" => $idSession]);
     }
 }
