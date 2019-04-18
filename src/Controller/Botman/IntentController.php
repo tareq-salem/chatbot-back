@@ -32,6 +32,9 @@ class IntentController extends AbstractController
                 $products =  $productController->getProductsByCategory($categories, $productRepository);
                 $data["response"]["data"] = $products;
                 break;
+            case "05_getCategories":
+                $data["response"]["data"] = $productController->getCategories($productRepository);
+                break;
         }
 
         $response = json_encode($data);

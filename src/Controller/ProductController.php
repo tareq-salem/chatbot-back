@@ -52,4 +52,9 @@ class ProductController extends AbstractController
         return new JsonResponse($data, 200, [], true);
     }
 
+    public function getCategories(ProductRepository $productRepository) {
+        $categories = $productRepository->findAllCategories();
+        return $categories;
+    }
+
 }

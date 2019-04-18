@@ -41,6 +41,15 @@ class ProductRepository extends ServiceEntityRepository
         return $stmt->fetchAll();
     }
 
+    public function findAllCategories() {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT p.categorie FROM product p GROUP BY p.categorie";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */
