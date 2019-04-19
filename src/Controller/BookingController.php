@@ -6,6 +6,7 @@ use App\Entity\Booking;
 use App\Form\BookingType;
 use App\Entity\User;
 use App\Repository\BookingRepository;
+use App\Repository\CartRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -43,24 +44,54 @@ class BookingController extends AbstractController
     /**
      * @Route("/new", name="booking_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(BookingRepository $bookingRepository, Request $request, Security $security, CartRepository $cartRepository, UserRepository $userRepository): Response
     {
-        $booking = new Booking();
-        $form = $this->createForm(BookingType::class, $booking);
-        $form->handleRequest($request);
+        $currentUser = $security->getUser();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($booking);
-            $entityManager->flush();
+        $data = json_decode($request->getContent(), true);
 
-            return $this->redirectToRoute('booking_index');
+        $isValidate = $data['isValidate'];
+        $isTerminated = $data['isTerminated'];
+        $cart_id = $data['cart_id'];
+        $user_id = $data['user_id'];
+        $user = $userRepository->find($user_id);
+        $cartToBeBooked = $cartRepository->find($cart_id);
+        
+        if($currentUser === $user)
+        {
+
+
+
+            $cartsOfCurrentUser = $user->getCarts();
+            foreach ($cartsOfCurrentUser as $cart)
+            {
+                $cartInBookings = $cartToBeBooked->getBooking();
+                if ($cart == $cartToBeBooked && $cartInBookings == null )
+                {
+                        $theBooking = new Booking();
+                        $theBooking->setIsValidate($isValidate);
+                        $theBooking->setIsTerminated($isTerminated);
+                        $theBooking->setUser($user);
+                        $theBooking->addCart($cart);
+                        $entityManager = $this->getDoctrine()->getManager();
+
+                        $entityManager->persist($theBooking);
+                        $entityManager->flush();
+
+                        return new Response('added');
+                }else
+                {
+                    return new Response('error');
+                }
+
+            }
+
+
+        }else
+        {
+            return new Response('error');
         }
 
-        return $this->render('booking/new.html.twig', [
-            'booking' => $booking,
-            'form' => $form->createView(),
-        ]);
     }
 
     /**

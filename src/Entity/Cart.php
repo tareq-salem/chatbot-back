@@ -28,8 +28,15 @@ class Cart
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Booking", inversedBy="carts")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $booking;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="carts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -71,12 +78,25 @@ class Cart
 
         return $this;
     }
-         /**
+
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+
+    /**
     * 
     * @return string
     */
-
     public function __toString() {
         return (string) $this->id;
+
     }
 }

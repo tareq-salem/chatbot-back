@@ -72,7 +72,6 @@ class AppFixtures extends Fixture
             $User->setLastname($faker->lastName);
             $User->setAddress($faker->address);
             $User->setApiToken($faker->text(10));
-
             $User->setRoles([$faker->randomElement($randomRoles)]);
 
             $randomUser [] = $User; 
